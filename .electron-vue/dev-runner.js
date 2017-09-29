@@ -64,6 +64,16 @@ function startRenderer () {
       {
         contentBase: path.join(__dirname, '../'),
         quiet: true,
+        proxy: { // 添加proxy代理
+          '/music': {
+            target: 'http://67.218.157.91:3000',
+            pathRewrite: {
+              '^/music': '/music'
+            },
+            changeOrigin: true,
+            secure: false,
+          }
+        },
         setup (app, ctx) {
           app.use(hotMiddleware)
           ctx.middleware.waitUntilValid(() => {

@@ -126,20 +126,6 @@ let rendererConfig = {
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node']
   },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-    proxy: {
-      '/music': {
-        target: 'http://67.218.157.91:3000',
-        pathRewrite: {
-          '^/music': '/music'
-        },
-        changeOrigin: true,
-        secure: false,
-      }
-    }
-  },
   target: 'electron-renderer'
 }
 
