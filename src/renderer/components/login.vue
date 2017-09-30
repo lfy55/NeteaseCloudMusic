@@ -19,6 +19,8 @@
 import config from '../config'
 import { interceptors } from '../lib/myUtils'
 
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'login-page',
   data() {
@@ -62,6 +64,7 @@ export default {
   mounted() {
   },
   methods: {
+    ...mapMutations(['changeUser']),
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -72,7 +75,10 @@ export default {
                 message: '登陆成功',
                 type: 'success'
               })
-              console.log('个人信息', data.profile)
+              console.log('个人信息', data.data.profile)
+
+              this.changeUser({ user: data.data.profile })
+              this.$router.push({ name: 'user-profile' })
             })
             .catch(data => {
               this.$message({
