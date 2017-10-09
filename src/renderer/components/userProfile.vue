@@ -27,7 +27,7 @@
         </el-table-column>
         <el-table-column label="">
           <template scope="scope">
-            <el-button @click.native.prevent="addPlaying(scope.$index)" width="40" type="text" size="small">
+            <el-button @click.native.prevent="addPlaying(scope.row)" width="40" type="text" size="small">
               <i class="el-icon-plus" tooltip="点击添加到播放列表"></i>
             </el-button>
           </template>
@@ -40,7 +40,7 @@
 <script>
 import config from '@/config'
 import { interceptors } from '@/lib/myUtils'
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 
 import musicListMin from './musicListMin'
 
@@ -84,6 +84,7 @@ export default {
       })
   },
   methods: {
+    ...mapMutations(['addMusicToPlaying']),
     clickList(id) {
       this.showMusics = true
       this.loaddingTab = true
@@ -106,7 +107,15 @@ export default {
           this.loaddingTab = false
         })
     },
-    addPlaying() { },
+    addPlaying(music) {
+      if (music.id) {
+        this.addMusicToPlaying({ music })
+      } else {
+        this.musicsData.forEach(item => {
+          this.addMusicToPlaying({ music: item })
+        })
+      }
+    },
   },
 }
 </script>

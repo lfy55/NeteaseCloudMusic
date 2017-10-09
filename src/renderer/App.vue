@@ -50,6 +50,8 @@ export default {
         this.$router.push({ name: 'user-profile' })
       } else if (item === 1) {
         this.$router.push({ name: 'home' })
+      } else if (item === 2) {
+        this.$router.push({ name: 'playing' })
       }
     }
   },
@@ -115,6 +117,9 @@ export default {
   animation: rotate 1s linear infinite;
 }
 
+.selected .playing {
+  animation: rotate 1s linear infinite;
+}
 
 @-webkit-keyframes rotate {
   from {
