@@ -40,7 +40,7 @@
 <script>
 import config from '@/config'
 import { interceptors } from '@/lib/myUtils'
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 import musicListMin from './musicListMin'
 
@@ -84,7 +84,7 @@ export default {
       })
   },
   methods: {
-    ...mapMutations(['addMusicToPlaying']),
+    ...mapActions(['addMusic']),
     clickList(id) {
       this.showMusics = true
       this.loaddingTab = true
@@ -109,10 +109,10 @@ export default {
     },
     addPlaying(music) {
       if (music.id) {
-        this.addMusicToPlaying({ music })
+        this.addMusic({ music })
       } else {
         this.musicsData.forEach(item => {
-          this.addMusicToPlaying({ music: item })
+          this.addMusic({ music: item })
         })
       }
     },
@@ -123,7 +123,6 @@ export default {
 <style scoped>
 .user-profile {
   width: 100%;
-  height: 100%;
   background-repeat: no-repeat;
   background-size: 100% auto;
 }

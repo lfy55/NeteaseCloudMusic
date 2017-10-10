@@ -20,10 +20,5 @@ export default new Router({
       name: 'home',
       component: require('@/components/home').default
     },
-    {
-      path: '/playing',
-      name: 'playing',
-      component: require('@/components/playing').default
-    },
   ]
 })

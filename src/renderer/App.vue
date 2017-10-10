@@ -7,21 +7,19 @@
       <div class="left-item" :class="{selected: selectedItem === 1}" @click="changeTab(1)">
         <i class="left-icon el-icon-search"></i>
       </div>
-      <div class="left-item" :class="{selected: selectedItem === 2}" @click="changeTab(2)">
-        <img src="./assets/playing.jpg" alt="" class="facial playing">
-      </div>
     </div>
     <div class="right-margin">
-      <router-view></router-view>
+      <div class="content">
+        <router-view></router-view>
+      </div>
+      <div id="playDom"></div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import config from './config'
-import { interceptors } from './lib/myUtils'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
+import cplayer from 'cplayer'
 
 export default {
   name: 'my-music',
@@ -29,19 +27,26 @@ export default {
     return {
       name: '',
       selectedItem: 0,
+      cPlayer: {},
     }
   },
   mounted() {
-    // 测试登陆
-    // this.$http.get(config.baseUrl + 'login/cellphone?phone=18951656987&password=asd123456')
-    //   .then(interceptors)
-    //   .then(data => {
-    //     this.name = data.profile.nickname
-    //     console.log('个人信息', data.profile)
-    //   })
+    this.cPlayer = new cplayer({
+      element: document.getElementById('playDom'),
+      playlist: [
+      ],
+      width: '100%',
+      dropDownMenuMode: 'top',
+      autoplay: true,
+      style: `.cp-drop-down-menu.cp-drop-down-menu-top.cp-drop-down-menu-playlist{max-height: 300px;overflow-y:auto;}
+      .cp-drop-down-menu.cp-drop-down-menu-top.cp-drop-down-menu-playlist::-webkit-scrollbar {width: 4px;background-color: transparent;}
+      .cp-drop-down-menu.cp-drop-down-menu-top.cp-drop-down-menu-playlist::-webkit-scrollbar-thumb {background-color: var(--liteColor);border-radius: 10px;}
+      .cp-drop-down-menu.cp-drop-down-menu-top.cp-drop-down-menu-playlist::-webkit-scrollbar-track {background-color: transparent;}`,
+    })
   },
   computed: {
     ...mapGetters(['getFacial']),
+    ...mapState(['playingList', 'playingIndex']),
   },
   methods: {
     changeTab(item) {
@@ -50,9 +55,16 @@ export default {
         this.$router.push({ name: 'user-profile' })
       } else if (item === 1) {
         this.$router.push({ name: 'home' })
-      } else if (item === 2) {
-        this.$router.push({ name: 'playing' })
       }
+    }
+  },
+  watch: {
+    playingList: {
+      handler: function(nVal) {
+        let i = nVal.length - 1, music = nVal[i]
+        this.cPlayer.add(music)
+      },
+      deep: true,
     }
   },
 }
@@ -81,7 +93,24 @@ export default {
 }
 
 .right-margin {
+  width: 100%;
+  height: 100%;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+}
+
+#playDom {
+  width: 100%;
+  min-height: 50px;
+  flex-shrink: 0;
+  align-self: flex-end;
 }
 
 .left-item {

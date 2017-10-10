@@ -84,19 +84,7 @@ export default {
         return
       }
       let music = this.playingList[this.playingIndex]
-      this.$http.get(config.baseUrl + 'music/url?id=' + music.id)
-        .then(interceptors)
-        .then(data => {
-          console.log('获取音乐url', data)
-          this.musicUrl = data.data.data[0].url
-        })
-
-      this.$http.get(config.baseUrl + 'lyric?id=' + music.id)
-        .then(interceptors)
-        .then(data => {
-          console.log('获取歌词', data)
-          this.lrcContent = data.data.lrc.lyric
-        })
+      
     }
   }
 }
@@ -161,6 +149,6 @@ export default {
 }
 
 audio {
-  display: none;
+  /* display: none; */
 }
 </style>
