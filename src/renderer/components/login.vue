@@ -1,25 +1,31 @@
 <template>
   <div class="app">
-    <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="手机号" prop="phone">
-        <el-input v-model.number="ruleForm2.phone"></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="pass">
-        <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm2')">登陆</el-button>
-        <el-button @click="resetForm('ruleForm2')">重置</el-button>
-      </el-form-item>
-    </el-form>
+    <div class="bg">
+      <ribbon></ribbon>
+    </div>
+    <div class="from-margin">
+      <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model.number="ruleForm2.phone"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="pass">
+          <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm2')">登陆</el-button>
+          <el-button @click="resetForm('ruleForm2')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script>
 import config from '../config'
 import { interceptors } from '../lib/myUtils'
-
 import { mapMutations } from 'vuex'
+
+import ribbon from './animate/ribbon'
 
 export default {
   name: 'login-page',
@@ -61,7 +67,8 @@ export default {
       }
     };
   },
-  mounted() {
+  components: {
+    ribbon,
   },
   methods: {
     ...mapMutations(['changeUser']),
@@ -107,9 +114,22 @@ export default {
 <style scoped>
 .app {
   width: 100%;
+}
+
+.from-margin {
+  position: absolute;
+  left: calc(50% - 175px);
+  top: 0px;
+  width: 350px;
   height: 100%;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.bg {
+  width: 100%;
+  height: 100%;
 }
 </style>
