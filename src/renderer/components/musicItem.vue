@@ -15,7 +15,7 @@ export default {
   props: ['music', 'isplaying'],
   methods: {
     playing() {
-      this.$emit('playing', this.music.id )
+      this.$emit('playing', this.music )
     },
   }
 }
@@ -73,7 +73,7 @@ export default {
   font-size: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 200px;
+  width: 400px;
   white-space: nowrap;
 }
 </style>

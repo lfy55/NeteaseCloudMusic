@@ -121,7 +121,7 @@ export default {
   left: calc(50% - 175px);
   top: 0px;
   width: 350px;
-  height: 100%;
+  height: calc(100% - 50px);
   z-index: 2;
   display: flex;
   align-items: center;
