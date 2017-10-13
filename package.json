@@ -15,6 +15,7 @@
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
     "postinstall": ""
   },
+  "main": "dist/electron/main.js",
   "build": {
     "productName": "my-music",
     "appId": "org.simulatedgreg.electron-vue",
